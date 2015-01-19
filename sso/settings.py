@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'unicoresso',
     'mama_cas',
-    'codieapp',        
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,3 +83,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = '/login/'
