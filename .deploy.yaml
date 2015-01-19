@@ -1,0 +1,10 @@
+buildscript: sideloader/build.sh
+postinstall: sideloader/postinstall.sh
+pip:
+ - Django<1.7
+ - gunicorn
+dependencies:
+ - nginx
+ - postgresql-server-dev-all
+ - libpq-dev
+ - postgresql
