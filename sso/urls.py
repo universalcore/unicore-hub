@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 
+admin.autodiscover()
+
 urlpatterns = patterns(
     '',
     url(
