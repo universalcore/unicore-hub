@@ -6,4 +6,4 @@ class authorizedSite(models.Model):
 	group = models.ManyToManyField(Group)
 
 	def __str__(self):
-		return self.url
+		return self.site
