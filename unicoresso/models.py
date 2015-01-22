@@ -1,15 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import Group, User
 
-class User(models.Model):
-	username = models.CharField(max_length=30)
-	password = models.CharField(max_length=30)
-
-	def __str__(self):
-		return self.username
-
-class Repo(models.Model):
-	url = models.CharField(max_length=30)
-	users = models.ManyToManyField(User)
+class authorizedSite(models.Model):
+	site = models.CharField(max_length=200)
+	group = models.ManyToManyField(Group)
 
 	def __str__(self):
 		return self.url

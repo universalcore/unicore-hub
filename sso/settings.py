@@ -26,6 +26,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MAMA_CAS_ATTRIBUTE_CALLBACKS = ('path.to.custom_attributes',)
+
 
 # Application definition
 
