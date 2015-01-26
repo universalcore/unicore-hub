@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+#import django.conf.settings.MAMA_CAS_ATTRIBUTE_CALLBACKS
+#from django.conf import settings
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -86,6 +88,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+
+MAMA_CAS_ATTRIBUTE_CALLBACKS = ('sso.permissions.custom_attributes',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
