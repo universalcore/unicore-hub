@@ -1,4 +1,4 @@
 from django.contrib import admin
-from unicoresso.models import authorizedSite
+from unicoresso.models import AuthorizedSite
 # Register your models here.
-admin.site.register(authorizedSite)	
+admin.site.register(AuthorizedSite)

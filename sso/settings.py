@@ -72,7 +72,7 @@ DATABASES = {
 }
 
 SOUTH_MIGRATION_MODULES = {
-'mama_cas': 'unicoresso.migrations_mama_cas',
+    'mama_cas': 'unicoresso.migrations_mama_cas',
 }
 
 # Internationalization
@@ -87,8 +87,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 MAMA_CAS_ATTRIBUTE_CALLBACKS = ('sso.permissions.custom_attributes',)
 
