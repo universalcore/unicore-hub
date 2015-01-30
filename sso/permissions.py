@@ -1,5 +1,5 @@
-from unicoresso.models import authorizedSite
-from django.contrib.auth.models import Group, User
+from unicoresso.models import AuthorizedSite
+
 
 def custom_attributes(user, service):
 
@@ -15,12 +15,12 @@ def custom_attributes(user, service):
                     return {
                         'givenName': user.first_name,
                         'email': user.email,
-                        'has_perm': 'yes',
+                        'has_perm': True,
                         'service_name': service,
                         'group': group, }
     return {
         'givenName': user.first_name,
         'email': user.email,
-        'has_perm': 'no',
+        'has_perm': False,
         'service_name': service,
         'group': groups, }
