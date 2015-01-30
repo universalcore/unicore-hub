@@ -19,4 +19,5 @@ class customAttributesTest(TestCase):
 		site = authorizedSite.objects.create(site='foobar.com')
 		self.assertEqual(permissions.custom_attributes(user, site)['group'].count(), 0)
 
+	
 
