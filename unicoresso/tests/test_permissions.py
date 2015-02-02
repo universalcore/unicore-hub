@@ -8,27 +8,27 @@ class customAttributesTest(TestCase):
 
     def test_group_access(self):
         user = User.objects.create(first_name='foo')
-        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        attr = permissions.custom_attributes(user, 'http://foobar.com/')
         self.assertEqual(attr['has_perm'], False)
 
     def test_correct_user(self):
         user = User.objects.create(first_name='foo')
-        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        attr = permissions.custom_attributes(user, 'http://foobar.com/')
         self.assertEqual(attr['givenName'], 'foo')
 
     def test_correct_group(self):
         user = User.objects.create(first_name=' ')
-        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        attr = permissions.custom_attributes(user, 'http://foobar.com/')
         self.assertEqual(len(attr['groups']), 0)
 
         group = Group.objects.create(name='The Foo')
         user.groups.add(group)
         user.save()
-        site = AuthorizedSite.objects.create(site='foobar.com')
+        site = AuthorizedSite.objects.create(site='http://foobar.com/*')
         site.group.add(group)
         site.save()
 
-        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        attr = permissions.custom_attributes(user, 'http://foobar.com/')
         self.assertEqual(len(attr['groups']), 1)
         self.assertEqual(attr['groups'], ['The Foo'])
 
@@ -39,25 +39,25 @@ class customAttributesTest(TestCase):
         user.save()
 
         site = AuthorizedSite.objects.create(
-            site='*.fflangola.qa-hub.unicore.io')
+            site='http://*.fflangola.qa-hub.unicore.io/*')
         site.group.add(group)
         site.save()
 
         attr = permissions.custom_attributes(
-            user, 'htto://cms.tz.fflangola.qa-hub.unicore.io/login/')
+            user, 'http://cms.tz.fflangola.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], True)
         self.assertEqual(attr['groups'], ['Unicef'])
 
         attr = permissions.custom_attributes(
-            user, 'htto://cms.za.fflangola.qa-hub.unicore.io/login/')
+            user, 'http://cms.za.fflangola.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], True)
 
         attr = permissions.custom_attributes(
-            user, 'htto://cms.za.ffl.qa-hub.unicore.io/login/')
+            user, 'http://cms.za.ffl.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], False)
 
         attr = permissions.custom_attributes(
-            user, 'htto://cms.za.gem.qa-hub.unicore.io/login/')
+            user, 'http://cms.za.gem.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], False)
 
     def test_exact_match_site(self):
@@ -67,11 +67,11 @@ class customAttributesTest(TestCase):
         user.save()
 
         site = AuthorizedSite.objects.create(
-            site='cms.za.mama.qa-hub.unicore.io')
+            site='http://cms.za.mama.qa-hub.unicore.io/*')
         site.group.add(group)
         site.save()
 
         attr = permissions.custom_attributes(
-            user, 'htto://cms.za.mama.qa-hub.unicore.io/login/')
+            user, 'http://cms.za.mama.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], True)
         self.assertEqual(attr['groups'], ['MAMA'])

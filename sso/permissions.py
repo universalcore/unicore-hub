@@ -1,16 +1,11 @@
 from unicoresso.models import AuthorizedSite
-from urlparse import urlparse
-import re
+from glob import fnmatch
 
 
 def custom_attributes(user, service):
-    service_domain = urlparse(service).netloc
-
     matched_sites = [
         s for s in AuthorizedSite.objects.all()
-        if re.match(
-            re.compile(re.escape(s.site).replace('\\*', '.*')),
-            service_domain)]
+        if fnmatch.fnmatch(service, s.site)]
 
     if matched_sites:
         user_groups = set(user.groups.values_list('name', flat=True))
