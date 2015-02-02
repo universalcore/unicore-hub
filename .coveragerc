@@ -1,0 +1,3 @@
+[run]
+omit = unicoresso/migrations/*
+source= unicoresso/

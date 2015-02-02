@@ -1,29 +1,27 @@
 from unicoresso.models import AuthorizedSite
+from glob import fnmatch
 
 
 def custom_attributes(user, service):
-    # for group in request.user.groups.all():
-    #     if (service in group.objects.all()):
-    # return {'givenName': user.first_name, 'email': user.email, 'has_perm':
-    # 'yes'}
-    groups = user.groups.values_list('name', flat=True)
+    matched_sites = [
+        s for s in AuthorizedSite.objects.all()
+        if fnmatch.fnmatch(service, s.site)]
 
-    if AuthorizedSite.objects.filter(site=service).exists():
-        website = AuthorizedSite.objects.get(site=service)
-        site_groups = website.group.values_list('name', flat=True)
-
-        for group in groups:
-            for site_group in site_groups:
-                if site_group == group:
-                    return {
-                        'givenName': user.first_name,
-                        'email': user.email,
-                        'has_perm': 'yes',
-                        'service_name': service,
-                        'group': group, }
+    if matched_sites:
+        user_groups = set(user.groups.values_list('name', flat=True))
+        for site in matched_sites:
+            site_groups = set(site.group.values_list('name', flat=True))
+            intersect = user_groups & site_groups
+            if intersect:
+                return {
+                    'givenName': user.first_name,
+                    'email': user.email,
+                    'has_perm': True,
+                    'service_name': service,
+                    'groups': list(intersect)}
     return {
         'givenName': user.first_name,
         'email': user.email,
-        'has_perm': 'no',
+        'has_perm': False,
         'service_name': service,
-        'group': groups, }
+        'groups': []}
