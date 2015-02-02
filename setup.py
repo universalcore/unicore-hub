@@ -9,9 +9,12 @@ with open(os.path.join(here, 'README.rst')) as f:
 with open(os.path.join(here, 'requirements.txt')) as f:
     requires = filter(None, f.readlines())
 
+with open(os.path.join(here, 'VERSION')) as f:
+    version = f.read().strip()
+
 setup(
     name='unicore-hub',
-    version='1.0.0',
+    version=version,
     description=(
         'Central Authentication Service for Universal Core'),
     long_description=README,
