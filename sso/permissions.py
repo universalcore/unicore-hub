@@ -9,7 +9,7 @@ def custom_attributes(user, service):
     matched_sites = [
         s for s in AuthorizedSite.objects.all()
         if re.match(
-            re.compile(s.site.replace('.', '\\.').replace('*', '.*')),
+            re.compile(re.escape(s.site).replace('\\*', '.*')),
             service_domain)]
 
     if matched_sites:
