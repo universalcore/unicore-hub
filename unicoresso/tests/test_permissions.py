@@ -8,21 +8,29 @@ class customAttributesTest(TestCase):
 
     def test_group_access(self):
         user = User.objects.create(first_name='foo')
-        site = AuthorizedSite.objects.create(site='http://foobar.com')
-        self.assertEqual(
-            permissions.custom_attributes(user, site.site)['has_perm'], False)
+        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        self.assertEqual(attr['has_perm'], False)
 
     def test_correct_user(self):
         user = User.objects.create(first_name='foo')
-        site = AuthorizedSite.objects.create(site='http://foobar.com')
-        self.assertEqual(
-            permissions.custom_attributes(user, site.site)['givenName'], 'foo')
+        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        self.assertEqual(attr['givenName'], 'foo')
 
     def test_correct_group(self):
         user = User.objects.create(first_name=' ')
-        site = AuthorizedSite.objects.create(site='http://foobar.com')
-        self.assertEqual(
-            len(permissions.custom_attributes(user, site.site)['groups']), 0)
+        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        self.assertEqual(len(attr['groups']), 0)
+
+        group = Group.objects.create(name='The Foo')
+        user.groups.add(group)
+        user.save()
+        site = AuthorizedSite.objects.create(site='foobar.com')
+        site.group.add(group)
+        site.save()
+
+        attr = permissions.custom_attributes(user, 'htto://foobar.com/')
+        self.assertEqual(len(attr['groups']), 1)
+        self.assertEqual(attr['groups'], ['The Foo'])
 
     def test_wildcard_url(self):
         user = User.objects.create(first_name='foo')
