@@ -4,21 +4,17 @@ import re
 
 
 def custom_attributes(user, service):
-    # e.g
-    # User: Joe Soap
-    # serice: http://cms.tz.fflangola.qa-hub.unicore.io/login/
-
     service_domain = urlparse(service).netloc
 
-    sites = [
+    matched_sites = [
         s for s in AuthorizedSite.objects.all()
         if re.match(
             re.compile(s.site.replace('.', '\\.').replace('*', '.*')),
             service_domain)]
 
-    if sites:
+    if matched_sites:
         user_groups = set(user.groups.values_list('name', flat=True))
-        for site in sites:
+        for site in matched_sites:
             site_groups = set(site.group.values_list('name', flat=True))
             intersect = user_groups & site_groups
             if intersect:
