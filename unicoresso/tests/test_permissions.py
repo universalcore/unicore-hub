@@ -83,3 +83,29 @@ class customAttributesTest(TestCase):
         attr = permissions.custom_attributes(
             user, 'ssh://cms.za.mama.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], False)
+
+    def test_multiple_groups(self):
+        group_mama = Group.objects.create(name='MAMA')
+        group_gem = Group.objects.create(name='GEM')
+        group_prk = Group.objects.create(name='Praekelt')
+
+        user_mama = User.objects.create(username='mamauser')
+        user_mama.groups.add(group_mama)
+        user_mama.save()
+
+        user_gem = User.objects.create(username='gemuser')
+        user_gem.groups.add(group_gem)
+        user_gem.save()
+
+        site = AuthorizedSite.objects.create(
+            site='http://cms.za.mama.qa-hub.unicore.io/*')
+        site.group.add(*[group_prk, group_mama])
+        site.save()
+
+        attr = permissions.custom_attributes(
+            user_mama, 'http://cms.za.mama.qa-hub.unicore.io/login/')
+        self.assertEqual(attr['has_perm'], True)
+
+        attr = permissions.custom_attributes(
+            user_gem, 'http://cms.za.mama.qa-hub.unicore.io/login/')
+        self.assertEqual(attr['has_perm'], False)
