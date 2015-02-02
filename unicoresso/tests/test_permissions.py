@@ -75,3 +75,11 @@ class customAttributesTest(TestCase):
             user, 'http://cms.za.mama.qa-hub.unicore.io/login/')
         self.assertEqual(attr['has_perm'], True)
         self.assertEqual(attr['groups'], ['MAMA'])
+
+        attr = permissions.custom_attributes(
+            user, 'htto://cms.za.mama.qa-hub.unicore.io/login/')  # deliberate
+        self.assertEqual(attr['has_perm'], False)
+
+        attr = permissions.custom_attributes(
+            user, 'ssh://cms.za.mama.qa-hub.unicore.io/login/')
+        self.assertEqual(attr['has_perm'], False)
