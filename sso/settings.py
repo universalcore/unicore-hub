@@ -36,13 +36,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'raven.contrib.django.raven_compat',
+    'grappelli',
+    'django.contrib.admin',
     'south',
     'unicoresso',
     'mama_cas',
@@ -101,6 +102,8 @@ MEDIA_URL = '/media/'
 
 
 LOGIN_URL = '/login/'
+
+GRAPPELLI_ADMIN_TITLE = 'Universal Core Hub'
 
 try:
     from sso.local_settings import *
