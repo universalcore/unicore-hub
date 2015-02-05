@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% block meta_tags %}
+        <meta charset="utf-8" />
+        <meta name="robots" content="noindex,nofollow" />
+    {% endblock meta_tags %}
+    <title>
+        {% block title %}{% trans "Central Authentication Service" %}{% endblock title %}
+    </title>
+    {% block styles %}
+        <link rel="stylesheet" href="/static/grappelli/stylesheets/screen.css">
+        <link rel="stylesheet" href="/static//grappelli/stylesheets/mueller/grid/output.css">
+
+    {% endblock styles %}
+    {% block javascript %}{% endblock javascript %}
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body class="grp-login">
+    <div id="header">
+        {% block header %}{% endblock header %}
+    </div>
+    <div id="grp-content" class="box">
+        {% block content %}{% endblock content %}
+    </div>
+    <div id="footer">
+        {% block footer %}{% endblock footer %}
+    </div>
+</body>
+</html>
