@@ -2,5 +2,16 @@
 {% load i18n %}
 
 {% block title %}{% trans "Universal Core Hub" %}{% endblock title %}
+{% block content %}
+<h1>
 {% block content_title %}{% trans "Universal Core Hub" %}{% endblock content_title %}
-{% block content %}{% endblock %}
+</h1>
+<fieldset class="grp-module grp-submit-row g-d-7">
+    <h2>You're logged in as: {{user.username}}</h2>
+    <ul>
+        <li>
+            <a class="grp-button grp-default" href="{% url 'admin:logout'%}">Logout</a>
+        </li>
+    </ul>
+</fieldset>
+{% endblock %}
