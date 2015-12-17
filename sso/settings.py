@@ -10,8 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-#import django.conf.settings.MAMA_CAS_ATTRIBUTE_CALLBACKS
-#from django.conf import settings
+# import django.conf.settings.MAMA_CAS_ATTRIBUTE_CALLBACKS
+# from django.conf import settings
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'south',
     'unicoresso',
     'mama_cas',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,6 +56,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.google.GoogleOAuth2',
 )
 
 ROOT_URLCONF = 'sso.urls'
@@ -101,7 +107,11 @@ MEDIA_ROOT = abspath('media')
 MEDIA_URL = '/media/'
 
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/login/'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 GRAPPELLI_ADMIN_TITLE = 'Universal Core Hub'
 

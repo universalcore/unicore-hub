@@ -8,3 +8,4 @@ pytest-django
 pytest-cov
 pytest-xdist
 django-grappelli<2.6.1
+python-social-auth
